@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this code in your research, please cite the conference paper listed as the preferred citation."
+type: software
+title: "Enhancing Video Anomaly Detection through Optimized Pre-processing: ROI Cropping and Reconstruction Loss - Reference Implementation"
+authors:
+  - family-names: "Saefudin"
+    given-names: "Dede Firmansyah"
+  - family-names: "Jasmir"
+  - family-names: "Putra"
+    given-names: "Zico Pratama"
+repository-code: "https://github.com/dekops13/Enhancing-Video-Anomaly-Detection-ROI-Cropping"
+preferred-citation:
+  type: conference-paper
+  title: "Enhancing Video Anomaly Detection through Optimized Pre-processing: ROI Cropping and Reconstruction Loss"
+  authors:
+    - family-names: "Saefudin"
+      given-names: "Dede Firmansyah"
+    - family-names: "Jasmir"
+    - family-names: "Putra"
+      given-names: "Zico Pratama"
+  year: 2025
+  conference:
+    name: "2025 IEEE International Conference on Advanced Information Scientific Development (ICAISD)"
+  doi: "10.1109/ICAISD68166.2025.11385780"
+  url: "https://doi.org/10.1109/ICAISD68166.2025.11385780"
