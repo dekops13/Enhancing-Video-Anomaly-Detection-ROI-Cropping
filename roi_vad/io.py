@@ -1,4 +1,4 @@
-"""Dataset frame streams and 1-based frame indices (new reconstruction)."""
+"""Dataset frame streams with explicit 1-based frame indices."""
 from pathlib import Path
 import re
 import cv2

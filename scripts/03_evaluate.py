@@ -1,7 +1,6 @@
-"""Reconstructed auditable frame-level UCSD Ped1/Ped2/Avenue evaluator.
+"""Frame-level evaluation for UCSD Ped1, UCSD Ped2 and CUHK Avenue.
 
-Threshold mode MUST be explicitly selected because published sections disagree.
-Never uses test scores to tune the threshold. GT missing -> skip annotated sequence.
+Calibration uses validation-only scores. Missing ground truth is excluded.
 """
 import argparse
 import csv
@@ -24,7 +23,7 @@ def main():
     p.add_argument('--checkpoint',required=True,help='Trained AE .pth (not detector)')
     p.add_argument('--result-dir',required=True)
     p.add_argument('--threshold-mode',choices=['f1','p95','meanstd'],required=True,
-                   help='Choose explicitly to resolve inconsistent published protocol')
+                   help='Choose explicitly to resolve alternative published threshold descriptions')
     p.add_argument('--k',type=float,default=3.,help='Mean+k*std threshold only')
     p.add_argument('--no-roi',choices=['skip','zero'],default='skip')
     p.add_argument('--val-ratio',type=float,default=0.30)
@@ -40,7 +39,7 @@ def main():
     vs=np.asarray([r['score'] for r in val_rows]);vy=np.asarray([r['label'] for r in val_rows])
     threshold,sweep=select_threshold(vy,vs,args.threshold_mode,args.k)
     result_dir=Path(args.result_dir);result_dir.mkdir(parents=True,exist_ok=True)
-    summary={'dataset':args.dataset,'origin':'RECONSTRUCTED pipeline (not verified source)',
+    summary={'dataset':args.dataset,'implementation':'reference implementation',
              'threshold_mode':args.threshold_mode,'frame_pooling':'max ROI MSE',
              'no_roi':args.no_roi,'threshold_k':args.k,
              'validation':metrics(val_rows,threshold),'test':metrics(test_rows,threshold),

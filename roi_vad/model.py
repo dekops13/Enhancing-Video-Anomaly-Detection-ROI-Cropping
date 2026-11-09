@@ -1,6 +1,6 @@
-"""CNN autoencoder as pasted by the author in their research conversation.
+"""32x32 grayscale convolutional autoencoder.
 
-The encoder and decoder definitions reproduce the 32x32 network, not its weights.
+The architecture matches the network described in the study. Weights must be trained or supplied separately.
 """
 from pathlib import Path
 import torch

@@ -1,4 +1,4 @@
-"""Reconstructed pipeline tests; use synthetic data, NOT published dataset results."""
+"""Unit tests on synthetic inputs; published benchmark values are not evaluated."""
 import csv
 from pathlib import Path
 import numpy as np

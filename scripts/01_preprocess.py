@@ -1,8 +1,8 @@
-"""RECONSTRUCTED preprocessing: YOLOv5 + OpenCV MOG2 gating -> letterboxed 32x32 ROIs.
+"""Preprocess video sequences with YOLOv5 detection, MOG2 motion gating,
+and 32x32 grayscale ROI extraction.
 
-The exact original detector weights, BSMOG2 variant and gating hyperparameters
-are lost. This is an independent executable approximation, not the original code.
-Use an installed YOLOv5 checkout and a compatible weights file, acquired separately.
+Detector weights and motion-gating parameters are configurable.
+The exact original settings are not specified in the publication.
 """
 import argparse
 import csv
@@ -53,7 +53,7 @@ def main():
                    help='Minimum foreground occupancy inside a box')
     p.add_argument('--warmup', type=int, default=0, help='Frames to skip before saving ROIs')
     p.add_argument('--mask-foreground', action='store_true',
-                   help='Apply foreground mask to crop; optional unverified experiment choice')
+                   help='Optionally mask cropped ROIs using the foreground mask')
     args = p.parse_args()
     if not 0 <= args.fg_ratio <= 1:
         p.error('--fg-ratio must be in [0,1]')

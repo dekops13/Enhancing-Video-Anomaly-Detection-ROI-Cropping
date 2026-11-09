@@ -1,8 +1,7 @@
 """Frame-level anomaly scoring, sequence split and validation-only thresholding.
 
-NEW RECONSTRUCTION. The user's earlier snippets sometimes evaluated per ROI or used
-P95 of test scores. This implementation instead evaluates source frames, checks GT
-length, records no-ROI coverage, and never selects a threshold using test scores.
+Evaluation uses source-frame indices, checks ground-truth length, and selects
+thresholds on validation sequences only.
 """
 import csv
 import json
@@ -35,7 +34,7 @@ def resolve_roi(row, test_root):
 def predict_frame_scores(model, test_root, batch_size=128, device='cpu'):
     """Return {(sequence,1-based-frame-index): maximum per-ROI MSE}.
 
-    Max pooling is a declared reconstruction choice: original pooling rule unknown.
+    Max pooling maps multiple ROI losses to one frame score.
     """
     test_root = Path(test_root)
     rows = read_manifest(test_root/'roi_manifest.csv')
@@ -98,7 +97,7 @@ def assemble_labeled_frames(dataset, test_root, gt_root, scored, no_roi='skip'):
 def split_sequences(records, val_ratio=0.3, seed=42):
     """Reproducible, disjoint sequence-level split with positive/negative support.
 
-    This is a *reconstructed* stratified split; split of published run unknown.
+    Deterministic sequence-level split with both label classes represented.
     The procedure never optimizes F1/AUC using test labels.
     """
     by_seq=defaultdict(list)
@@ -123,11 +122,11 @@ def split_sequences(records, val_ratio=0.3, seed=42):
             [r for r in records if r['sequence'] not in chosen],
             {'seed':seed,'val_sequences':sorted(chosen),
              'test_sequences':sorted(set(seqs)-chosen),'val_ratio':val_ratio,
-             'provenance':'RECONSTRUCTED stratified sequence split'})
+             'split_strategy':'stratified_sequence_split'})
 
 
 def select_threshold(labels,scores,mode='f1',k=3.0):
-    """Pick threshold on *validation only*; exact original protocol unresolved.
+    """Select the anomaly threshold using validation data only.
 
     O(n log n) F1 sweep over all unique scores, not an approximation grid.
     """

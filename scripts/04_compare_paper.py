@@ -25,7 +25,7 @@ def main():
         test=payload['test']
         for name,old in ref.items():
             new=float(test[name])
-            rows.append(dict(dataset=ds,metric=name,published=old,reconstructed=new,
+            rows.append(dict(dataset=ds,metric=name,published=old,measured=new,
                              absolute_difference=round(abs(new-old),6),
                              publication_reproduced='NOT VERIFIED'))
             print(f'{ds:<7} {name:<10} published={old:.4f}, new={new:.4f}, abs_delta={abs(new-old):.4f}')

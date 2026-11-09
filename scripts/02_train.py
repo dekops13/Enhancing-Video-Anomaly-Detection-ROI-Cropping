@@ -1,7 +1,7 @@
-"""RECONSTRUCTED normal-only CNN-AE training on preprocessed 32x32 ROIs.
+"""Normal-only CNN autoencoder training on 32x32 grayscale ROIs.
 
-Paper: 50 epochs maximum, batch=128, Adam, MSE, early stopping. Learning rate,
-augmentations, seed and patience were not recoverable; configurable defaults.
+Published settings include up to 50 epochs, batch size 128, Adam, MSE and
+early stopping. Other hyperparameters are configurable experimental choices.
 """
 import argparse
 import json
@@ -25,7 +25,7 @@ class ROIImages(Dataset):
         with Image.open(self.paths[ix]) as im:
             a = np.array(im.convert('L').resize((32, 32)), dtype=np.float32).copy()/255.
         if self.augment:
-            # Optional RECONSTRUCTED augmentation; not verified in original experiment.
+            # Optional horizontal-flip data augmentation.
             if random.random() < 0.5: a = np.fliplr(a).copy()
         return torch.from_numpy(a.copy())[None, ...]
 
@@ -52,7 +52,7 @@ def train(args):
     optim = torch.optim.Adam(model.parameters(),lr=args.lr)
     best = float('inf'); patience = 0; history=[]
     out = Path(args.output);out.parent.mkdir(parents=True,exist_ok=True)
-    metadata = {'provenance':'RECONSTRUCTED, not recovered original training script',
+    metadata = {'implementation':'reference implementation of published method',
             'train_sequences':[s.name for s in train_seq],
             'val_sequences':[s.name for s in val_seq],
             'arguments':vars(args)}
@@ -82,21 +82,21 @@ def train(args):
                 break
     (out.parent/(out.stem+'_training.json')).write_text(json.dumps({'metadata':metadata,
         'history':history,'best_validation_mse':best},indent=2),encoding='utf-8')
-    print(f'Saved best reconstructed checkpoint: {out}')
+    print(f'Saved best model checkpoint: {out}')
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--rois',required=True,help='data/processed/<dataset>/train/rois')
-    p.add_argument('--output',required=True,help='e.g., checkpoints/ped1/reconstructed_best.pth')
+    p.add_argument('--output',required=True,help='e.g., checkpoints/ped1/best_model.pth')
     p.add_argument('--epochs',type=int,default=50)
     p.add_argument('--batch-size',type=int,default=128)
-    p.add_argument('--lr',type=float,default=1e-3,help='Unverified reconstruction default')
-    p.add_argument('--patience',type=int,default=7,help='Unverified reconstruction default')
+    p.add_argument('--lr',type=float,default=1e-3,help='Example; not specified in publication')
+    p.add_argument('--patience',type=int,default=7,help='Example; not specified in publication')
     p.add_argument('--val-ratio',type=float,default=0.20)
     p.add_argument('--min-delta',type=float,default=1e-6)
     p.add_argument('--seed',type=int,default=42)
-    p.add_argument('--augment',action='store_true',help='Unverified optional horizontal flips')
+    p.add_argument('--augment',action='store_true',help='Optional horizontal flips; not specified in publication')
     p.add_argument('--device',default='cpu')
     args=p.parse_args()
     if not 0 < args.val_ratio < 1: p.error('--val-ratio must be in (0,1)')

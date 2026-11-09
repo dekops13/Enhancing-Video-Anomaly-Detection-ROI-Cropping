@@ -1,2 +1,2 @@
-"""Reconstructed, provenance-audited implementation of the ROI anomaly detection pipeline."""
+"""Video anomaly detection with ROI preprocessing and reconstruction loss."""
 __version__ = '0.1.0'
