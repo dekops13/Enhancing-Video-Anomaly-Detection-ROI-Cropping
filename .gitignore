@@ -1,0 +1,16 @@
+# Checkpoints/datasets and potentially licensed third-party weights
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+*.pyc
+checkpoints/
+weights/
+datasets/
+data/
+results/
+*.pth
+*.pt
+*.npy
+*.npz
+!.gitkeep
