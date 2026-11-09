@@ -27,7 +27,9 @@ scripts/
   05_qualitative.py        TP / FP / FN examples when original frames exist
 notebooks/
   video_anomaly_detection.ipynb
-  docs/                    Experimental protocol and caveats
+docs/                      Experimental protocol and caveats
+CITATION.cff               GitHub citation metadata (preferred paper)
+CITATION.bib               BibTeX entry for the published paper
 requirements.txt
 README.md
 ```
@@ -137,6 +139,33 @@ Start JupyterLab from the repository root and open `notebooks/video_anomaly_dete
 ```bash
 jupyter lab
 ```
+
+## How to Cite
+
+If this implementation supports your research, please cite the **published conference paper** rather than using the repository URL as a substitute for the publication. GitHub provides a **Cite this repository** option based on the root [`CITATION.cff`](CITATION.cff), with the paper configured as the preferred citation.
+
+**Published paper**
+
+D. F. Saefudin, Jasmir, and Z. P. Putra, "Enhancing Video Anomaly Detection through Optimized Pre-processing: ROI Cropping and Reconstruction Loss," in *2025 IEEE International Conference on Advanced Information Scientific Development (ICAISD)*, IEEE, 2025, pp. 31–36. [https://doi.org/10.1109/ICAISD68166.2025.11385780](https://doi.org/10.1109/ICAISD68166.2025.11385780).
+
+**BibTeX**
+
+```bibtex
+@inproceedings{Saefudin2025VideoAnomalyDetection,
+  author    = {Saefudin, Dede Firmansyah and {Jasmir} and Putra, Zico Pratama},
+  title     = {Enhancing Video Anomaly Detection through Optimized Pre-processing: {ROI} Cropping and Reconstruction Loss},
+  booktitle = {2025 IEEE International Conference on Advanced Information Scientific Development (ICAISD)},
+  year      = {2025},
+  pages     = {31--36},
+  publisher = {IEEE},
+  doi       = {10.1109/ICAISD68166.2025.11385780},
+  url       = {https://doi.org/10.1109/ICAISD68166.2025.11385780}
+}
+```
+
+A standalone [`CITATION.bib`](CITATION.bib) file is also provided for LaTeX and reference managers.
+
+This repository is a reference implementation of the published methodology. Citing the paper does not imply that the original training environment, checkpoints, or published numerical results have been independently reproduced.
 
 ## Known limitations
 
